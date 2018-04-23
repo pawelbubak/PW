@@ -1,0 +1,11 @@
+Programowanie Współbieżne
+
+OPIS 
+"inf132197_s.c"- plik odpowiadający za działanie i całą funkcjonalność serwera
+"inf132197_k.c"- plik obsługujący prosty chat - funkcjonalność serwera
+
+KOMPILACJA
+Aby skompilować programy należy uruchomić skrypt "kompilowanie.sh". Po tej czynności powinny pojawić się dwa pliki wykonywalne: inf132197_s oraz inf132197_k
+
+URUCHOMIENIE
+Należy najpierw uruchomić program serwera, a następnie program klienta w terminalu (zablokowana jest  możliwość rozruchu klienta jako pierwszego programu). Użytkownicy i grupy wczytywane są automatycznie z plików konfiguracyjnych. Hasło dla wszystkich użytkowników zostało ustawione na "test". (Jeśli nastąpi zablokowanie logowania użytkownika - należy odblokować go na serwerze za pomocą komendy "unlock 'login'" lub "unlock all".) Obsługa klienta oraz serwera wyśwetlana jest po wpisaniu komendy "help".

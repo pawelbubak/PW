@@ -1,0 +1,46 @@
+﻿Protokół komunikacji
+Typy kolejek:
+Kolejka zwykła do komunikacji z serwerem (główna) - 1240
+Kolejka do odbioru wiadomości priorytetowych - 2480
+Kolejka dla komunikatów - 5120
+mType komunikatu
+1 dla serwera,
+PID dla klienta
+Typ komunikatu:
+0 – stan
+1 – zarządzanie połączeniem
+2 – zarządzanie grupami
+3 – wiadomość prywatna
+4 – wiadomość publiczna
+5 – komunikat
+Podtyp komunikatu stanu:
+0 – lista użytkowników na serwerze
+1 – lista użytkowników zapisanych do danej grupy
+2 – lista grup
+Podtyp zarządzania połączeniami:
+0 – zaloguj
+1 – wyloguj
+Zarządzanie grupami:
+0 – prośba o dołączenie do grupy
+1 – opuszczenie grupy
+Wiadomości prywatne:
+0 – wiadomość priorytetowa
+1 – wiadomość zwykła
+Wiadomości publiczne:
+0 – wiadomość priorytetowa
+1 – wiadomość zwykła
+Komunikat
+0 – powodzenie
+-1 – błąd
+Struktura wiadomości:
+long mtype – serwer/klient
+int typ  – typ komunikatu
+int podtyp – wybór opcji
+char wiadomosc[128] – id / wiadomość
+char poleDanych1[16] – login / nazwa nadawcy
+char poleDanych2[16] – hasło / nazwa odbiorcy / nazwa grupy
+Opis sposobu komunikacji
+Korzystamy z trzech kolejek za pomocą kolejki głównej przesyłamy wszystkie żądania od klientów do serwera. Serwer wysyła komunikaty poprzez kolejkę komunikatów, wiadomości poprzez kolejkę wiadomości lub kolejkę wiadomości priorytetowych nadając mType równy wartości PID danego klienta.
+Klient wysyłając wiadomość identyfikowany jest po loginie przesyłanym w polu danych nr 1, login odbiorcy przesyłany jest w polu danych nr 2, a wiadomość w wiadomości. Natomiast wysyłając jakiekolwiek inne żądanie w wiadomości zawarty jest PID klienta dla szybszej identyfikacji nadawcy przez serwer. Nazwy grup do których chce dołączyć użytkownik / opuścić je / wyświetlić użytkowników grupy przesyłane są w polu danych nr 2. W przypadku wiadomości grupowych grupa jest utożsamiana z odbiorcą. W przypadku każdego żądania wymagane jest ustawienie odpowiednich wartości (typ i podtyp).
+Przesyłanie wszystkich list realizowane jest poprzez wysłanie kilku wiadomości zawierających pojedyncze elementy listy, wiadomość z ostatnim elementem przesyłana jest z informacją końca listy („koniec”) w polu danych nr 2. Klient po każdym żądaniu oczekuje na odpowiedź serwera.
+Serwer wysyłając komunikat o błędzie może zamieścić treść błędu w polu wiadomość. Serwer nie pozwala na wysłanie wiadomości do niezalogowanego użytkownika.

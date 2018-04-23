@@ -1,0 +1,8 @@
+grupa1 1
+jasiek
+testowa 0
+
+imienni 2
+grazynka jasiek
+cosie 2
+test1 test2
